@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotPromotions should render correctly 1`] = `
+<div>
+  Welcome to Dashboard
+</div>
+`;
