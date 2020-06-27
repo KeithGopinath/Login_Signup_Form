@@ -9,7 +9,7 @@ import { history } from '../routes';
 import { getLogin } from '../actionCreators/Form';
 
 
-class LogIn extends React.Component {
+export class LogIn extends React.Component {
   submit = (values) =>
     axios.get('http://localhost:8000/contacts')
       .then((response) => {

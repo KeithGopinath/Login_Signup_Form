@@ -6,38 +6,39 @@ import Login from './Login';
 
 configure({ adapter: new Adapter() });
 
+const submit = jest.fn();
+const LogIn = jest.fn();
+const renderField = jest.fn();
+
+const initialProps = {
+  submit,
+  LogIn,
+  renderField,
+};
+
 describe('Login', () => {
   const tree = shallow(<Login
-    row=""
-    cols=""
-    input={{ value: '' }}
-    meta={{ touched: true, error: true }}
+    {...initialProps}
+    form={{ signup: { registeredFields: { firstName: 'firstName', lirstName: 'lirstName' } } }}
+    home={{
+      newlogin: [{ password: 'altimetrik', username: 'altimetrik' }],
+      signin: false,
+      signuplogin: [{ username: 'altimetrik', password: 'altimetrik' }, { username: 'keith', password: 'keith' }],
+    }}
+    handleSubmit={submit}
   />);
+
+  it('should render correctly', () => {
+    expect(tree).toMatchSnapshot();
+  });
 
   it('should be defined', () => {
     expect(Login).toBeDefined();
   });
 
-  it('should render correctly', () => {
-    expect(tree).toMatchSnapshot();
+  it('login click handler', () => {
+    const simulateClick = tree.find('.form').prop('handleSubmit');
+    simulateClick();
+    expect(submit).toBeCalled();
   });
-  it('Called function handleChange', () => {
-    tree.instance().LogIn();
-  });
-
-//   it('should render Table Component', () => {
-//     expect(tree.find('Tables').length).toBe(1);
-//   });
-
-//   it('should render Accordion component', () => {
-//     expect(tree.find('Accordion').length).toBe(1);
-//   });
-
-//   it('should render Panel Group correctly', () => {
-//     expect(tree.find('PanelGroup').length).toBe(1);
-//   });
-
-//   it('should render Dropdown component', () => {
-//     expect(tree.find('Dropdown').length).toBe(1);
-//   });
 });

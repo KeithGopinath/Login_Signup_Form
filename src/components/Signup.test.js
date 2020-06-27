@@ -1,35 +1,42 @@
 import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Signup from './Signup';
+import { SignUp } from './Signup';
 
 
 configure({ adapter: new Adapter() });
 
-describe('SpotPromotions', () => {
-  const tree = shallow(<Signup />);
+const getSignup = jest.fn();
+const loginData = jest.fn();
+const formValues = jest.fn();
+const initialProps = {
+  getSignup,
+  loginData,
+};
 
-  it('should be defined', () => {
-    expect(Signup).toBeDefined();
-  });
+describe('Signup', () => {
+  const tree = shallow(<SignUp
+    {...initialProps}
+    form={{ signup: { registeredFields: { firstName: 'firstName', lirstName: 'lirstName' } } }}
+    home={{
+      newlogin: [{ password: 'altimetrik', username: 'altimetrik' }],
+      signin: false,
+      signuplogin: [{ username: 'altimetrik', password: 'altimetrik' }, { username: 'keith', password: 'keith' }],
+    }}
+    handleSubmit={formValues}
+  />);
 
   it('should render correctly', () => {
     expect(tree).toMatchSnapshot();
   });
 
-//   it('should render Table Component', () => {
-//     expect(tree.find('Tables').length).toBe(1);
-//   });
+  it('should be defined', () => {
+    expect(SignUp).toBeDefined();
+  });
 
-//   it('should render Accordion component', () => {
-//     expect(tree.find('Accordion').length).toBe(1);
-//   });
-
-//   it('should render Panel Group correctly', () => {
-//     expect(tree.find('PanelGroup').length).toBe(1);
-//   });
-
-//   it('should render Dropdown component', () => {
-//     expect(tree.find('Dropdown').length).toBe(1);
-//   });
+  it('should call click handler', () => {
+    const simulateClick = tree.find('.form').prop('handleSubmit');
+    simulateClick();
+    expect(formValues).toBeCalled();
+  });
 });

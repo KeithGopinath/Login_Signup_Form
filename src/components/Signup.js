@@ -44,7 +44,7 @@ const country = [
   },
 ];
 
-class SignUp extends React.Component {
+export class SignUp extends React.Component {
   formValues = () => {
     const { values } = this.props;
     this.props.getSignup(values);
